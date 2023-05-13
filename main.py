@@ -1,20 +1,62 @@
 class Question:
+    """
+    A class representing a question in the game.
+
+    Attributes:
+    text (str): The text of the question.
+    yes (int or str): The index of the next question to ask if the answer is 'yes', or the value 'end' if the game ends.
+    no (int or str): The index of the next question to ask if the answer is 'no', or the value 'end' if the game ends.
+    """
     def __init__(self, text, yes, no):
+        """
+        Initializes a new Question object.
+
+        Parameters:
+        text (str): The text of the question.
+        yes (int or str): The index of the next question to ask if the answer is 'yes', or the value 'end' if the game ends.
+        no (int or str): The index of the next question to ask if the answer is 'no', or the value 'end' if the game ends.
+        """
         self.text = text
         self.yes = yes
         self.no = no
 
 
 class GameContext:
+    """
+    A class representing the context of the game.
+    """
     def showquestion(self, question):
+        """
+        Displays the text of the given question.
+
+        Parameters:
+        question (Question): The question to display.
+        """
         print(question.text)
 
     def end_game(self):
+        """
+        Displays a message indicating that the game has ended.
+        """
         print("End")
 
 
 class Game:
+    """
+    A class representing the game.
+
+    Attributes:
+    game_context (GameContext): The context of the game.
+    questions (list of Question): The list of questions in the game.
+    current_question (int): The index of the current question in the game.
+    """
     def __init__(self, game_context):
+        """
+        Initializes a new Game object.
+
+        Parameters:
+        game_context (GameContext): The context of the game.
+        """
         self.game_context = game_context
         self.questions = [
             Question(
@@ -46,17 +88,32 @@ class Game:
         self.current_question = 0
 
     def start(self):
+        """
+        Starts the game by displaying the first question.
+        """
         self.game_context.showquestion(self.questions[self.current_question])
 
     def answer_yes(self):
+        """
+        Processes the player's answer of 'yes' by displaying the next question based on the current question's 'yes' attribute.
+        """
         next_question = self.questions[self.current_question].yes
         self.process_answer(next_question)
 
     def answer_no(self):
+        """
+        Processes the player's answer of 'no' by displaying the next question based on the current question's 'no' attribute.
+        """
         next_question = self.questions[self.current_question].no
         self.process_answer(next_question)
 
     def process_answer(self, next_question):
+        """
+        Processes the player's answer by updating the current question and displaying the next question or ending the game.
+
+        Parameters:
+        next_question (int or str): The index of the next question to display or the value 'end' to end the game.
+        """
         if next_question == 'end':
             self.game_context.end_game()
         else:
